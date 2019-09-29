@@ -31,11 +31,15 @@ def update_repo_to_selected_branch(repo_path, branch_name):
     if active_branch.name != branch_name:
         active_branch.checkout(B=branch_name)
 
-    # [origin] = repo.remotes
-    # print('start to fetch remotes')
-    # origin.fetch()
-    # print('start to pull the changes')
-    # origin.pull()
+    [origin] = repo.remotes
+    print('start to pull the changes')
+    
+    try:
+        origin.pull('--rebase')
+    except exc.GitCommandError as error:
+        print('error in repo:', repo_path)
+        print(error)
+        sys.exit(1)
 
     print('repository in ' + repo_path + ' was successfully updated')
 
