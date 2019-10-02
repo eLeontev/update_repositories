@@ -24,7 +24,7 @@ def update_repo_to_selected_branch(repo_path, branch_name):
     try:
         repo = Repo(repo_path)
     except exc.GitError:
-        print('repo: ' + repo_path + ' does not exists')
+        print('repo:', repo_path, 'does not exists')
         sys.exit(1)
 
     active_branch = repo.active_branch
@@ -32,16 +32,17 @@ def update_repo_to_selected_branch(repo_path, branch_name):
         active_branch.checkout(B=branch_name)
 
     [origin] = repo.remotes
-    print('start to pull the changes')
+    print('start to pull the changes in:', repo_path)
     
     try:
         origin.pull('--rebase')
     except exc.GitCommandError as error:
         print('error in repo:', repo_path)
         print(error)
-        sys.exit(1)
+        # to continue pull the data
+        #sys.exit(1) 
 
-    print('repository in ' + repo_path + ' was successfully updated')
+    print('repository in', repo_path, 'was successfully updated')
 
 with open(branch_file_name, 'w+') as branch_file:
     branch_file.write(branch_name)
