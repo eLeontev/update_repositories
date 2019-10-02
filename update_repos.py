@@ -42,7 +42,7 @@ def update_repo_to_selected_branch(repo_path, branch_name):
         # to continue pull the data
         #sys.exit(1) 
 
-    print('repository in', repo_path, 'was successfully updated')
+    print(repo_path, '-', 'was successfully updated')
 
 with open(branch_file_name, 'w+') as branch_file:
     branch_file.write(branch_name)
